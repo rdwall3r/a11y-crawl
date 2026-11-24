@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "Crawls a site and performs an accessibility scan on every unique path",
   "scripts": {
-    "test": "node --test"
+    "build": "tsc",
+    "prepack": "npm run build",
+    "test": "npm run build && node --test dist/src/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -12,7 +14,8 @@
   "keywords": [
     "accessibility",
     "audit",
-    "scan"
+    "scan",
+    "a11y"
   ],
   "author": "Ryan Waller",
   "license": "MIT",
@@ -22,11 +25,11 @@
   },
   "homepage": "https://github.com/rdwall3r/a11y-crawl#readme",
   "bin": {
-    "a11y-crawl": "./bin/cli.js"
+    "a11y-crawl": "./dist/bin/cli.js"
   },
   "files": [
-    "bin",
-    "src"
+    "dist",
+    "!dist/**/*.test.*"
   ],
   "engines": {
     "node": ">=22.12.0"
@@ -34,5 +37,15 @@
   "dependencies": {
     "@axe-core/playwright": "^4.14.1",
     "playwright": "^1.65.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "^7.0.2"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    }
   }
 }
